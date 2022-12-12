@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="index.js"></script>
+
+    <title>모멘텀앱 - 따라만들기</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
+
+        * {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-image: url("https://images.unsplash.com/photo-1666065988253-3ad95ca4404f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80");
+            background-position: center;
+            background-size: cover;
+
+            color: white;
+        }
+
+        .main {
+            width: 100vw;
+            height: 80vh;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .greeting {
+            font-size: 50px;
+
+            margin-bottom: 30px;
+            
+            width: 80vw;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .todo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .currentTime {
+            margin: 30px 0;
+
+            font-size: 80px;
+            font-weight: bold;
+        }
+
+        .todoTitle {
+            font-size: 25px;
+            margin-bottom: 10px;
+        }
+
+        .todoContent {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .quote {
+            width: 80vw;
+            height: 20vh;
+
+            margin: auto;
+            
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+
+        .quoteAuthor {
+            font-style: italic;
+            font-size: 20px;
+            text-shadow: 2px;
+        }
+        
+    </style>
+    <script>
+    </script>
+</head>
+
+<body>
+    <div class="main">
+        <div id="currentWeather" class="currentWeather"></div>
+        <div class="greeting">Hello, Yungsang!</div>
+        <div class="todo">
+            <div id="currentTime" class="currentTime">12:25</div>
+            <div class="totoTitle">TODAY'S TODO</div>
+            <div class="todoContent">Momentum Clone Coding</div>
+        </div>
+    </div>
+    <div class="quote">
+        <div id="quoteAuthor" class="quoteAuthor">- 에이브러햄 링컨 -</div>
+        <div id="quoteContent" class="quoteContent">"내게 나무를 벨 여섯 시간을 준다면, 도끼를 벼리는데 네 시간을 쓰겠다"</div>
+    </div>
+</body>
+
+</html>
