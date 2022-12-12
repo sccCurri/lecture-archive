@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>자바스크립트 문법 연습하기!</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    </head>
+    <style>
+        .button-part {
+            display: flex;
+            height: 50px;
+        }
+        .list-part div {
+            font-size: 20px;
+        }
+
+        .dict-part div {
+            font-size: 20px;
+            font-weight: bold;
+            color: red;
+        }
+    </style>
+    <script>
+        console.log('스파르타!')
+        // func
+        const refreshPage = () => window.location.reload()
+
+        function checkResult() {
+            alert('함수!')
+
+            $('#q1').empty()
+            $('#q2').empty()
+            $('#q3').empty()
+
+
+            // list
+            let fruitList = ['🍓','🍊','🍒','🍇']
+            console.log(fruitList)
+            $('#q1').append(fruitList)
+
+            $('#q1').append(`<div>----</div`)
+            
+            fruitList.forEach((fruit) => {
+                fruit = `<div>${fruit}</div>`
+                $('#q1').append(fruit)
+            })
+
+            // dict
+            let nameDict = {
+                "name" : "영수",
+                "age" : 25
+            }
+            console.log(nameDict)
+            let profile = `${nameDict['name']}의 나이는 ${nameDict['age']}살입니다`
+            $('#q2').text(profile)
+
+            // list dict
+            let membersFruitList = [
+                {
+                    'name' : 'lee',
+                    'fav' : '🍇'
+                },
+                {
+                    'name' : 'hwang',
+                    'fav' : '🍒'
+                },
+                {
+                    'name' : 'joo',
+                    'fav' : '🍊'
+                }
+            ]
+            console.log(membersFruitList)
+            // $('#q3').append(`<div>${membersFruitList}</div>`)
+            $('#q3').append(`<div>=====<div>`)
+
+            membersFruitList.forEach((info) => {
+                info = `<div>${info['name']}가 제일 좋아하는 과일은 ${info['fav']}입니다<div>`
+                $('#q3').append(info)
+            })
+        }
+    </script>
+    <body>
+        <div class="top-part">
+            <h1>자바스크립트 문법 연습하기!</h1>
+        </div>
+        <hr/>
+        <br>
+        <h2>1. 함수</h2>
+        <div class="button-part">
+            <button onclick="checkResult()">결과 확인하기!</button>
+            <button onclick="refreshPage()">새로고침하기!</button>
+        </div>
+        <div class="list-part">
+            <h2>2. 리스트</h2>
+            <div id="q1"></div>
+        </div>
+        <div class="dict-part">
+            <h2>3. 딕셔너리</h2>
+            <div id="q2"></div>
+        </div>
+        <div>
+            <h2>4. 리스트 딕셔너리</h2>
+            <div id="q3"></div>
+        </div>
+    </body>
+</html>
