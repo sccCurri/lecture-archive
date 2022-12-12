@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>Document</title>
+
+    <script>
+        $(document).ready(function() {
+            fetch('/test')
+                .then(res => res.json())
+                .then(data => {
+                    // console.log(data)
+                    alert(data['msg'])
+                })
+        })
+
+        function hey(){
+            // alert('안녕!')
+            let formData = new FormData()
+            formData.append('title_give', '봄날은 간다')
+
+            fetch('/test', {
+                method : 'POST',
+                body: formData
+            })
+                .then(res => res.json())
+                .then(data => {
+                    // console.log(data)
+                    alert(data['msg'])
+                })
+
+        }
+    </script>
+</head>
+<body>
+    <button onclick="hey()">나는 버튼!</button>
+</body>
+</html>
