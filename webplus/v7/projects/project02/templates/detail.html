@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <meta property="og:title" content="{{ word_name }}">
+    <meta property="og:description" content="{{ result.definitions[0].definition }}">
+    <meta property="og:image" content="{{ url_for('static', filename='logo_red.png') }}">
+
+    <title>Sparta Vocabulary Notebook</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <title> 나만의 단어장 </title>
+    <style>
+        .wrap {
+            background-color: RGBA(232, 52, 78, 0.2);
+            height: 100vh;
+        }
+
+        .main_logo {
+            text-align: center;
+            background-color: white;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: white;
+            border: solid 1px gray;
+            border-radius: 10px;
+        }
+
+        .name_div {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .definition {
+            padding: 10px;
+        }
+
+        .input_div {
+            display: flex;
+            width: 90%;
+            margin: 20px auto;
+            max-width: 700px;
+        }
+
+        .input_box {
+            width: 100%;
+            margin-right: 10px;
+        }
+
+    </style>
+    <script>
+
+      function to_main() {
+        window.location.href = "/"
+      }
+
+      function save_word() {
+        $.ajax({
+          type: "POST",
+          url: "/api/save_word",
+          data: {
+            word_give: "{{ word_name }}",
+            definition_give: "{{ result.definitions[0].definition }}"
+          },
+          success: function (response) {
+            alert(response['msg'])
+            window.location.reload()
+          }
+        })
+      }
+
+      function delete_word() {
+        $.ajax({
+          type: "POST",
+          url: "/api/delete_word",
+          data: {
+            word_give: "{{ word_name }}",
+          },
+          success: function (response) {
+            alert(response['msg'])
+            window.location.href = "/"
+          }
+        })
+      }
+
+      function save_ex() {
+        let new_ex = $("#new-example").val()
+
+        $.ajax({
+          type: "POST",
+          url: "/api/save_ex",
+          data: {
+            word_give: "{{ word_name }}",
+            example_give: new_ex
+          },
+          success: function (response) {
+            alert(response['msg'])
+            window.location.reload()
+          }
+        })
+      }
+
+      function delete_ex(word, example) {
+        console.log(word, example)
+        $.ajax({
+          type: "POST",
+          url: "/api/delete_ex",
+          data: {
+            word_give: word,
+            example_give: example
+          },
+          success: function (response) {
+            alert(response['msg'])
+            window.location.reload()
+          }
+        })
+      }
+
+    </script>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="main_logo" onclick="to_main()">
+        <img src="../static/logo_red.png" alt="">
+      </div>
+      <div class="container">
+        <div class="name_div">
+          <div style="display: flex">
+            <h1>{{ word_name }}</h1>
+            <h3 style="padding-left: 5px; padding-top:13px">{{ result.pronunciation }}</h3>
+          </div>
+          <div>
+            {% if is_saved == True %}
+              <button onclick="delete_word()" type="button" class="btn btn-outline-danger btn-lg"><i
+                class="fa fa-trash-o" aria-hidden="true"></i></button>
+            {% else %}
+              <button onclick="save_word()" type="button" class="btn btn-outline-danger btn-lg"><i
+                class="fa fa-floppy-o" aria-hidden="true"></i></button>
+            {% endif %}
+          </div>
+        </div>
+        <hr>
+        <div>
+          {% for definition in result.definitions %}
+            <div class="definition">
+              <div style="font-style: italic;">{{ definition.type }}</div>
+              <div>{{ definition.definition }}</div>
+              <div style="color: #808080; font-size: 14px;">{{ definition.example }}</div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% if is_saved == True %}
+        <div class="container">
+          <div style="text-align: center">
+            <h2>Write your own sentences!</h2>
+          </div>
+          <div>
+            <ul>
+              {% for example in examples %}
+                <li>{{ example.example }} <span style="color: lightgray; padding-left:5px" onclick="delete_ex('{{ word_name }}', '{{ example.example }}')" >delete</span></li>
+              {% endfor %}
+            </ul>
+          </div>
+          <div class="input_div">
+            <input id="new-example" class="input_box" type="text">
+            <button onclick="save_ex()" type="button" class="btn btn-outline-secondary btn-sm">add</button>
+          </div>
+        </div>
+        </div>
+      {% endif %}
+  </body>
+</html>

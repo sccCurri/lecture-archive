@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Sparta Vocabulary Notebook</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <title> 나만의 단어장 </title>
+    <style>
+      .wrap {
+          background-color: RGBA(232, 52, 78, 0.2);
+          height: 100%;
+          padding-bottom: 50px;
+      }
+      .main_logo {
+          text-align: center;
+          background-color: white;
+      }
+      .input_div {
+          display: flex;
+          width: 70%;
+          margin: 50px auto;
+          max-width: 700px;
+      }
+      .input_box {
+          width: 100%;
+          margin-right: 10px;
+      }
+
+      .table_wrap {
+          width: 80%;
+          max-width: 800px;
+          margin: auto;
+      }
+
+      .table {
+          border-collapse: collapse;
+          border-radius: 10px;
+
+      }
+
+      .highlight {
+          background-color: #e8344e;
+          color: white;
+      }
+
+    </style>
+    <script>
+      let words = {{ words|tojson }};
+      let word_list = [];
+      for (let i = 0; i < words.length; i++) {
+        word_list.push(words[i]["word"])
+      }
+
+      function enterkey() {
+        if (window.event.keyCode == 13) {
+          // 엔터키가 눌렸을 때
+          find_word()
+        }
+      }
+
+      function find_word(){
+        let word = $("#input_word").val()
+        if (word == ""){
+          alert('단어를 입력해주세요!')
+          return
+        }
+
+        if (word_list.includes(word)){
+          {# 포함하고 있으면 해당 위치로 이동하면서 CSS 적용  #}
+          $('tr').removeClass("highlight")
+          $(`#word-${word}`).addClass("highlight")
+          var offset = $(`#word-${word}`).offset(); //해당 위치 반환
+          $("html, body").animate({scrollTop: offset.top}, 400); // 선택한 위치로 이동. 두번째 인자는 0.4초를 의미한다.
+        } else {
+          {# 바로 상세페이지로 이동  #}
+          window.location.href = `/detail/${word}`
+        }
+
+
+      }
+
+
+    </script>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="main_logo">
+        <img src="../static/logo_red.png" alt="">
+      </div>
+      <div class="input_div">
+        <input id="input_word" class="input_box" type="text" onkeyup="enterkey()">
+        <button onclick="find_word()" type="button" class="btn btn-light"><i class="fa fa-search"></i></button>
+      </div>
+      <div class="table_wrap">
+        <table class="table table-light">
+          <thead class="table-secondary">
+          <tr>
+            <th scope="col">WORD</th>
+            <th scope="col">MEANING</th>
+          </tr>
+          </thead>
+          <tbody>
+          {% for word in words %}
+            <tr id="word-{{ word.word }}">
+              <td onclick="window.location.href='/detail/{{ word.word }}'">{{ word.word }}</td>
+              <td>{{ word.definition }}</td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>
