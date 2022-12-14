@@ -2,7 +2,7 @@ from flask import Flask, render_template, jsonify, request
 app = Flask(__name__)
 
 from pymongo import MongoClient
-client = MongoClient('mongodb+srv://sparta:sparta@cluster0.ryaqzeb.mongodb.net/?retryWrites=true&w=majority')
+client = MongoClient('내 URL')
 db = client.dbsparta_plus_week1
 
 from datetime import datetime
@@ -45,4 +45,4 @@ def save_diary():
     return jsonify({'msg': '저장 완료!'})
 
 if __name__ == '__main__':
-    app.run('0.0.0.0', port=8080, debug=True)
+    app.run('0.0.0.0', port=5000, debug=True)
