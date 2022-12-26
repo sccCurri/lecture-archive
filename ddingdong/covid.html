@@ -1,0 +1,50 @@
+<!-- API 오류 발생 코드 2022.12.23 -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <title>띵동코딩- Jquery + Fetch</title>
+    <style>
+        .wrap {
+            width: 500px;
+            margin: 20px 20px;
+        }
+        .covid {
+            color: red;
+        }
+        .safe {
+            color: blue;
+        }
+    </style>
+    <script>
+        function covid() {
+            let url = 'https://coronavirus-19-api.herokuapp.com/countries'
+            fetch(url).then(res => res.json()).then((data) => {
+                for(let i =0; i<data.length; i++){
+                    let country = data[i]['country'];
+                    let active = data[i]['active'];
+                    let temp_html = '';
+
+                }
+
+            });
+        }
+    </script>
+</head>
+
+<body>
+    <div class="wrap">
+        <button onclick="covid()">전 세계 코로나 정보</button>
+        <ul id="covidCountry">
+						<li class="safe"> World : 현재 확진자 : 21793184 </li>
+						<li class="covid"> USA : 현재 확진자 : 3796314 </li>
+				</ul>
+    </div>
+
+</body>
+
+</html>

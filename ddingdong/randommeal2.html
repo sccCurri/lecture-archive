@@ -1,0 +1,47 @@
+<!-- API 대체 코드 2022.12.23 -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <title>띵동코딩 - 오늘은 뭐 먹지?</title>
+    <style>
+        .wrap {
+            width: 500px;
+            margin: 20px 20px;
+        }
+        .wrap >div {
+            padding-top: 30px;
+        }
+        img {
+            margin-top : 20px;
+            display: block;
+        }
+    </style>
+    <script>
+        function lunch() {
+            let url = 'https://www.themealdb.com/api/json/v1/1/random.php'
+            fetch(url).then(res => res.json()).then((data) => {
+                console.log(data)
+                let imgurl = data['meals'][0]['strMealThumb']
+                let name = data['meals'][0]['strMeal']
+                $('#mylunch').attr('src',imgurl);
+                $('#lunchname').text(name)
+            });
+        }
+    </script>
+</head>
+
+<body>
+    <div class="wrap">
+        <button onclick="lunch()">오늘의 점심 메뉴 추천</button>
+        <img id="mylunch" src="https://www.themealdb.com/images/media/meals/g046bb1663960946.jpg" width="300">
+        <p id="lunchname">음식 이름</p>
+    </div>
+
+</body>
+
+</html>
